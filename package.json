@@ -1,7 +1,7 @@
 {
   "name": "opencode-content-filter",
   "version": "0.1.0",
-  "description": "OpenCode TUI plugin that surfaces provider content-filter finish reasons instead of leaving silent empty turns",
+  "description": "OpenCode plugin that surfaces provider content-filter finish reasons instead of leaving silent empty turns",
   "type": "module",
   "exports": {
     ".": {
@@ -9,14 +9,18 @@
     },
     "./tui": {
       "import": "./tui.tsx"
+    },
+    "./server": {
+      "import": "./server.ts"
     }
   },
   "files": [
+    "server.ts",
     "tui.tsx",
     "README.md"
   ],
   "scripts": {
-    "check": "bun -e \"import('./tui.tsx').then(() => console.log('plugin import ok'))\""
+    "check": "bun -e \"await import('./tui.tsx'); await import('./server.ts'); console.log('plugin import ok')\""
   },
   "keywords": [
     "opencode",

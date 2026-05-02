@@ -61,50 +61,10 @@ const tui: TuiPlugin = async (api) => {
     inspectSession(event.properties.sessionID)
   })
 
-  const offCommand = api.command.register(() => [
-    {
-      title: "Content Filter Status",
-      value: "plugin.content-filter.status",
-      description: "Show the latest content-filtered assistant response",
-      category: "Session",
-      slash: { name: "content-filter", aliases: ["filter-status"] },
-      enabled: api.route.current.name === "session",
-      onSelect: () => {
-        const route = api.route.current
-        if (route.name !== "session") {
-          api.ui.toast({ message: "No active session", variant: "error" })
-          return
-        }
-
-        const filtered = api.state.session
-          .messages(route.params.sessionID)
-          .filter(isFiltered)
-          .reverse()
-
-        if (!filtered.length) {
-          api.ui.toast({ message: "No content-filtered responses in this session", variant: "info" })
-          return
-        }
-
-        const latest = filtered[0]
-        api.ui.dialog.replace(
-          () =>
-            api.ui.DialogAlert({
-              title: "Content filter",
-              message: `${TOAST_MESSAGE}\n\nModel: ${messageLabel(latest)}\nMessage: ${latest.id}`,
-              onConfirm: () => api.ui.dialog.clear(),
-            }),
-          () => {},
-        )
-      },
-    },
-  ])
-
   api.lifecycle.onDispose(() => {
     offMessage()
     offPart()
     offSessionError()
-    offCommand()
   })
 
   if (api.route.current.name === "session") inspectSession(api.route.current.params.sessionID)

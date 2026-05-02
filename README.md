@@ -1,6 +1,6 @@
 # opencode-content-filter
 
-OpenCode TUI plugin that makes provider content-filter finishes visible instead of leaving an apparently silent empty assistant turn.
+OpenCode plugin that makes provider content-filter finishes visible instead of leaving an apparently silent empty assistant turn.
 
 ## Install
 
@@ -8,7 +8,7 @@ OpenCode TUI plugin that makes provider content-filter finishes visible instead 
 opencode plugin opencode-content-filter -g
 ```
 
-This installs the package globally and updates your `tui.json` automatically.
+This installs the package globally and updates your `opencode.json` and `tui.json` automatically.
 
 Or manually:
 
@@ -16,7 +16,18 @@ Or manually:
 npm install -g opencode-content-filter
 ```
 
-Then add to your `tui.json`:
+Then add `"opencode-content-filter"` to the `plugin` array in both `opencode.json` and `tui.json`.
+
+For `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-content-filter"]
+}
+```
+
+For `tui.json`:
 
 ```json
 {
@@ -27,19 +38,15 @@ Then add to your `tui.json`:
 
 ## Usage
 
-The plugin watches assistant messages in the active TUI session. When a provider returns `finish: "content-filter"` without visible text, it shows an error toast naming the model that was blocked.
+The plugin watches assistant messages for `finish: "content-filter"` without visible text.
 
-You can also run:
+In the TUI, it shows an error toast naming the model that was blocked.
 
-```text
-/content-filter
-```
-
-This shows the most recent content-filtered response in the current session.
+In `opencode run ...`, it writes a clear warning to stderr and sets a non-zero exit code.
 
 ## Limitations
 
-This is a TUI visibility plugin. The current OpenCode plugin API does not expose a server-side hook for mutating the persisted assistant `message.error` after a model stream finishes. For CLI, SDK, and persistent transcript behavior, OpenCode core should still surface `content-filter` finish reasons as errors.
+The plugin reports content-filter finishes but cannot mutate persisted assistant `message.error`. For SDK and persistent transcript behavior, OpenCode core should still surface `content-filter` finish reasons as errors.
 
 ## License
 
