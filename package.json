@@ -1,0 +1,49 @@
+{
+  "name": "opencode-content-filter",
+  "version": "0.1.0",
+  "description": "OpenCode TUI plugin that surfaces provider content-filter finish reasons instead of leaving silent empty turns",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./tui.tsx"
+    },
+    "./tui": {
+      "import": "./tui.tsx"
+    }
+  },
+  "files": [
+    "tui.tsx",
+    "README.md"
+  ],
+  "scripts": {
+    "check": "bun -e \"import('./tui.tsx').then(() => console.log('plugin import ok'))\""
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "tui",
+    "content-filter",
+    "moderation",
+    "finish-reason",
+    "session"
+  ],
+  "author": "Adam Hassan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adamkadaban/opencode-content-filter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Adamkadaban/opencode-content-filter/issues"
+  },
+  "homepage": "https://github.com/Adamkadaban/opencode-content-filter#readme",
+  "engines": {
+    "opencode": ">=1.14.22"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "latest",
+    "@opentui/core": "latest",
+    "@opentui/solid": "latest",
+    "solid-js": "^1.9.0"
+  }
+}
