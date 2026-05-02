@@ -1,6 +1,6 @@
 {
   "name": "opencode-content-filter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenCode plugin that surfaces provider content-filter finish reasons instead of leaving silent empty turns",
   "type": "module",
   "exports": {
